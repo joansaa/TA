@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>just4u</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      #loading {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: fit-content;
+        font-weight: bold;
+        font-family: sans-serif;
+        font-size: 30px;
+        padding: 0 5px 8px 0;
+        background: repeating-linear-gradient(
+            90deg,
+            currentColor 0 8%,
+            #0000 0 10%
+          )
+          200% 100%/200% 3px no-repeat;
+        animation: l3 2s steps(6) infinite;
+      }
+      @keyframes l3 {
+        to {
+          background-position: 80% 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div id="uploadForm">
+        <h2>Upload File</h2>
+        <form
+          method="post"
+          action="/upload"
+          enctype="multipart/form-data"
+          onsubmit="showLoading()"
+        >
+          <div class="form-group">
+            <input
+              type="file"
+              name="file"
+              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              class="form-control-file"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+      </div>
+
+      <div id="loading">Loading...</div>
+
+      {% if result %}
+      <script>
+        document.getElementById("uploadForm").style.display = "none";
+      </script>
+      <h2 class="mt-5">Rekomendasi Bundling dari Produk yang Sering Dibeli </h2> <br>
+      <div class="row">
+        {% for row in result %}
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Bundling :</h5>
+              <p class="card-text">{{ row[0] }}</p>
+              <p><b>dan</b></p>
+              <p class="card-text">{{ row[1] }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <!-- <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Antecedents Products</th>
+            <th>Consequents Products</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in result %}
+          <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table> -->
+      {% endif %}
+    </div>
+
+    <script>
+      function showLoading() {
+        document.getElementById("loading").style.display = "block";
+      }
+    </script>
+  </body>
+</html>
