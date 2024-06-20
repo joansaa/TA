@@ -90,7 +90,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h2 class="text-center">Upload CSV File</h2>
+      <h2 class="text-center">Upload Your Sales Data</h2>
       <!-- <form
         id="uploadForm"
         method="post"
@@ -176,19 +176,20 @@
         {% if result is string %}
             <p>{{ result }}</p>
         {% else %}
-            <h2>Apriori Association Rules:</h2>
-            <table>
-                <tr>
-                    <th>Antecedents Products</th>
-                    <th>Consequents Products</th>
-                </tr>
-                {% for rule in result %}
-                <tr>
-                    <td>{{ rule[0] }}</td>
-                    <td>{{ rule[1] }}</td>
-                </tr>
-                {% endfor %}
-            </table>
+          <h2 class="mt-5">Product Bundling Recommendation</h2>
+          <br>
+          <div class="card-columns">
+            {% for row in result %}
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Bundling:</h5>
+                <p class="card-text">{{ row[0] }}</p>
+                <p><b>dan</b></p>
+                <p class="card-text">{{ row[1] }}</p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
         {% endif %}
       {% endif %}
     </div>
