@@ -26,8 +26,13 @@ def process_file(filename):
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     preprocess_data(file_path)
     apriori_output_path = run_apriori("for_apriori.xlsx")
-    apriori_output = pd.read_excel(apriori_output_path)
-    result = apriori_output[['antecedents_products', 'consequents_products']].values.tolist()
+    
+    if isinstance(apriori_output_path, str) and apriori_output_path == "Tidak ada rekomendasi bundling produk karena data penjualan kurang banyak":
+        result = apriori_output_path
+    else:
+        apriori_output = pd.read_excel(apriori_output_path)
+        result = apriori_output[['antecedents_products', 'consequents_products']].values.tolist()
+    
     return render_template('index.html', result=result)
 
 if __name__ == '__main__':

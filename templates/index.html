@@ -152,23 +152,44 @@
 
       <div id="loading">Loading...</div>
 
-      {% if result %}
-      <!-- <script>
-        document.getElementById("uploadForm").style.display = "none";
-      </script> -->
-      <h2 class="mt-5">Hasil</h2>
-      <div class="card-columns">
-        {% for row in result %}
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Bundling:</h5>
-            <p class="card-text">{{ row[0] }}</p>
-            <p><b>dan</b></p>
-            <p class="card-text">{{ row[1] }}</p>
+      <!-- {% if result %}
+        {% if result is string %}
+            <p>{{ result }}</p>
+        {% else %}
+          <h2 class="mt-5">Hasil</h2>
+          <div class="card-columns">
+            {% for row in result %}
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Bundling:</h5>
+                <p class="card-text">{{ row[0] }}</p>
+                <p><b>dan</b></p>
+                <p class="card-text">{{ row[1] }}</p>
+              </div>
+            </div>
+            {% endfor %}
           </div>
-        </div>
-        {% endfor %}
-      </div>
+          {% endif %}
+      {% endif %} -->
+
+      {% if result %}
+        {% if result is string %}
+            <p>{{ result }}</p>
+        {% else %}
+            <h2>Apriori Association Rules:</h2>
+            <table>
+                <tr>
+                    <th>Antecedents Products</th>
+                    <th>Consequents Products</th>
+                </tr>
+                {% for rule in result %}
+                <tr>
+                    <td>{{ rule[0] }}</td>
+                    <td>{{ rule[1] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
       {% endif %}
     </div>
 

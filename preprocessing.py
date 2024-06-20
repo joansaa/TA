@@ -185,7 +185,12 @@ def run_apriori(preprocessed_file):
     te = TransactionEncoder()
     te_ary = te.fit(itemsets).transform(itemsets)
     df_trans = pd.DataFrame(te_ary, columns=te.columns_)
+    
+    # Cek apakah ada frequent itemsets
     frequent_itemsets = apriori(df_trans, min_support=0.001, use_colnames=True)
+    if frequent_itemsets.empty:
+        return "Tidak ada rekomendasi bundling produk karena data penjualan kurang banyak"
+    
     rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.1)
     rules['antecedents_products'] = extract_products_from_frozenset(rules['antecedents'])
     rules['consequents_products'] = extract_products_from_frozenset(rules['consequents'])
