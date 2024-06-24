@@ -53,14 +53,14 @@
         color: #92b0b3;
         position: relative;
         height: 150px;
+        text-align: center;
+        cursor: pointer;
       }
       .dropzone-desc {
         position: absolute;
         margin: 0 auto;
         left: 0;
         right: 0;
-        text-align: center;
-        width: 40%;
         top: 50px;
         font-size: 16px;
       }
@@ -79,6 +79,7 @@
       }
       .preview-zone {
         text-align: center;
+        margin-top: 10px;
       }
       .preview-zone .box {
         box-shadow: none;
@@ -102,17 +103,17 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label class="control-label">Upload File</label>
-                <div class="preview-zone hidden">
-                  <div class="box box-solid">
-                    <div class="box-body"></div>
-                  </div>
-                </div>
-                <div class="dropzone-wrapper">
+                <div class="dropzone-wrapper" onclick="triggerInputFile()">
                   <div class="dropzone-desc">
                     <i class="glyphicon glyphicon-download-alt"></i>
-                    <p>Choose an file</p>
+                    <p>Choose a file</p>
                   </div>
                   <input type="file" name="file" class="dropzone" />
+                  <div class="preview-zone hidden">
+                    <div class="box box-solid">
+                      <div class="box-body"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -158,8 +159,11 @@
       function showLoading() {
         document.getElementById("loading").style.display = "block";
       }
-    </script>
-    <script>
+
+      function triggerInputFile() {
+        document.querySelector(".dropzone").click();
+      }
+
       function readFile(input) {
         if (input.files && input.files[0]) {
           var reader = new FileReader();
@@ -172,17 +176,11 @@
               "<p>" +
               input.files[0].name +
               "</p>";
-            var wrapperZone = $(input).parent();
-            var previewZone = $(input).parent().parent().find(".preview-zone");
-            var boxZone = $(input)
-              .parent()
-              .parent()
-              .find(".preview-zone")
-              .find(".box")
-              .find(".box-body");
+            var previewZone = $(input).siblings(".preview-zone");
+            var boxZone = previewZone.find(".box-body");
 
-            wrapperZone.removeClass("dragover");
             previewZone.removeClass("hidden");
+            $(input).siblings(".dropzone-desc").hide();
             boxZone.empty();
             boxZone.append(htmlPreview);
           };
@@ -190,18 +188,22 @@
           reader.readAsDataURL(input.files[0]);
         }
       }
+
       function reset(e) {
         e.wrap("<form>").closest("form").get(0).reset();
         e.unwrap();
       }
+
       $(".dropzone").change(function () {
         readFile(this);
       });
+
       $(".dropzone-wrapper").on("dragover", function (e) {
         e.preventDefault();
         e.stopPropagation();
         $(this).addClass("dragover");
       });
+
       $(".dropzone-wrapper").on("dragleave", function (e) {
         e.preventDefault();
         e.stopPropagation();
