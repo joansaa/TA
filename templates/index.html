@@ -10,6 +10,7 @@
     />
     <script
       src="https://code.jquery.com/jquery-3.7.1.min.js"
+      
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
       crossorigin="anonymous"
     ></script>
@@ -135,7 +136,7 @@
                 <div class="dropzone-wrapper">
                   <div class="dropzone-desc">
                     <i class="glyphicon glyphicon-download-alt"></i>
-                    <p>Choose an image file or drag it here.</p>
+                    <p>Choose an file</p>
                   </div>
                   <input type="file" name="file" class="dropzone" />
                 </div>
@@ -193,6 +194,39 @@
         {% endif %}
       {% endif %}
     </div>
+
+    <!-- <h2 class="mt-5">Product Purchase Visualization</h2>
+    <canvas id="productChart" width="400" height="200"></canvas>
+    <script>
+        fetch('association_rules_with_products.json')
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(item => item.antecedents_products);
+                const dataPoints = data.map(item => item.confidence);
+
+                const ctx = document.getElementById('productChart').getContext('2d');
+                const productChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Confidence',
+                            data: dataPoints,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    </script> -->
 
     <script>
       function showLoading() {

@@ -1,3 +1,4 @@
+# import json
 import pandas as pd
 import string
 import re
@@ -177,6 +178,11 @@ def preprocess_data(file_path):
 
     data["nama_produk_stopword"] = data["nama_produk"].apply(remove_stopwords2)
 
+    # Menyisipkan code untuk menghitung jumlah nama_produk_stopword per pesanan
+    pesanan_counts = data.groupby('no_pesanan')['nama_produk_stopword'].count()
+    valid_pesanan = pesanan_counts[pesanan_counts > 1].index
+    data = data[data['no_pesanan'].isin(valid_pesanan)]
+
     data.to_excel("for_apriori.xlsx", index=False)
 
 def run_apriori(preprocessed_file):
@@ -192,11 +198,29 @@ def run_apriori(preprocessed_file):
         return "Tidak ada rekomendasi bundling produk karena data penjualan kurang banyak"
     
     rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.1)
-    rules['antecedents_products'] = extract_products_from_frozenset(rules['antecedents'])
-    rules['consequents_products'] = extract_products_from_frozenset(rules['consequents'])
+    # rules['antecedents_products'] = extract_products_from_frozenset(rules['antecedents'])
+    # rules['consequents_products'] = extract_products_from_frozenset(rules['consequents'])
+    # output_file = "association_rules_with_products.xlsx"
+    # rules.to_excel(output_file, index=False)
+    # return output_file
+
+    # Sort rules by confidence or any other metric you prefer
+    rules = rules.sort_values(by='confidence', ascending=False)
+
+    # Select top 10 rules
+    top_10_rules = rules.head(10)
+
+    # Update the subsequent code to use `top_10_rules` instead of `rules`
+    top_10_rules['antecedents_products'] = extract_products_from_frozenset(top_10_rules['antecedents'])
+    top_10_rules['consequents_products'] = extract_products_from_frozenset(top_10_rules['consequents'])
     output_file = "association_rules_with_products.xlsx"
-    rules.to_excel(output_file, index=False)
+    top_10_rules.to_excel(output_file, index=False)
     return output_file
+
+    # # Save rules to JSON for visualization
+    # rules.to_json("association_rules_with_products.json", orient='records')
+    
+    # return "association_rules_with_products.json"
 
 def extract_products_from_frozenset(column):
     return column.apply(lambda x: ', '.join(list(x)))
