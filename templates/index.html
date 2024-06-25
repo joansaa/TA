@@ -68,7 +68,6 @@
       .dropzone:focus {
         position: absolute;
         outline: none !important;
-        width: 100%;
         height: 150px;
         cursor: pointer;
         opacity: 0;
@@ -153,10 +152,17 @@
         {% endfor %}
       </div>
       {% endif %} {% endif %}
-    </div>
 
-    <h2 class="mt-5"> Frequently Purchased Products </h2>
-    <img src="data:image/png;base64,{{ img_str }}">
+      <div class="d-flex flex-column align-items-center mb-5">
+        <h2 class="mt-5">Frequently Purchased Products</h2>
+        <img
+          src="data:image/png;base64,{{ img_str }}"
+          alt="gambar grafik"
+          width="1000"
+          height="1000"
+        />
+      </div>
+    </div>
 
     <script>
       function showLoading() {

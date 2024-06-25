@@ -197,6 +197,62 @@ def preprocess_data(file_path):
     data.to_excel("for_apriori.xlsx", index=False)
     return data
 
+# def visualize_frequent_products(data):
+#     count = data['nama_produk_stopword'].value_counts().reset_index()
+#     count.columns = ['nama_produk_stopword', 'count']
+    
+#     plt.figure(figsize=(15, 10))
+#     ax = sns.barplot(x="nama_produk_stopword", y="count", data=count, order=count.sort_values('count', ascending=False)['nama_produk_stopword'].head(20))
+    
+#     for p in ax.patches:
+#         ax.annotate(format(p.get_height(), '.0f'), 
+#                     (p.get_x() + p.get_width() / 2., p.get_height()), 
+#                     ha='center', va='center', 
+#                     xytext=(0, 10), 
+#                     textcoords='offset points')
+    
+#     plt.xticks(rotation='vertical', fontsize=12)
+#     plt.yticks(fontsize=12)
+#     plt.title("Frequently Purchased Products", fontsize=20)
+#     plt.xlabel("Product Name", fontsize=16)
+#     plt.ylabel("Count", fontsize=16)
+    
+#     buffer = BytesIO()
+#     plt.savefig(buffer, format="png")
+#     buffer.seek(0)
+#     img_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
+#     buffer.close()
+    
+#     return img_str
+
+# def visualize_frequent_products(data):
+#     count = data['nama_produk_stopword'].value_counts().reset_index()
+#     count.columns = ['nama_produk_stopword', 'count']
+    
+#     plt.figure(figsize=(15, 10))
+#     ax = sns.barplot(x="nama_produk_stopword", y="count", data=count, order=count.sort_values('count', ascending=False)['nama_produk_stopword'].head(20))
+    
+#     for p in ax.patches:
+#         ax.annotate(format(p.get_height(), '.0f'), 
+#                     (p.get_x() + p.get_width() / 2., p.get_height()), 
+#                     ha='center', va='center', 
+#                     xytext=(0, 10), 
+#                     textcoords='offset points')
+    
+#     plt.xticks(rotation='vertical', fontsize=12)
+#     plt.yticks(fontsize=12)
+#     plt.title("Frequently Purchased Products", fontsize=20)
+#     plt.xlabel("Product Name", fontsize=16)
+#     plt.ylabel("Count", fontsize=16)
+    
+#     buffer = BytesIO()
+#     plt.savefig(buffer, format="png")
+#     buffer.seek(0)
+#     img_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
+#     buffer.close()
+    
+#     return img_str
+
 def visualize_frequent_products(data):
     count = data['nama_produk_stopword'].value_counts().reset_index()
     count.columns = ['nama_produk_stopword', 'count']
@@ -217,6 +273,9 @@ def visualize_frequent_products(data):
     plt.xlabel("Product Name", fontsize=16)
     plt.ylabel("Count", fontsize=16)
     
+    plt.tight_layout()  # Pastikan seluruh elemen grafik terlihat
+    plt.subplots_adjust(bottom=0.7)  # Tambahkan margin di bawah jika diperlukan
+
     buffer = BytesIO()
     plt.savefig(buffer, format="png")
     buffer.seek(0)
