@@ -151,17 +151,18 @@
         </div>
         {% endfor %}
       </div>
-      {% endif %} {% endif %}
-
+      {% endif %} {% endif %} {% if img_str %}
       <div class="d-flex flex-column align-items-center mb-5">
         <h2 class="mt-5">Frequently Purchased Products</h2>
         <img
           src="data:image/png;base64,{{ img_str }}"
           alt="gambar grafik"
-          width="1000"
-          height="1000"
+          width="800"
+          height="600"
         />
       </div>
+
+      {% endif %}
     </div>
 
     <script>
