@@ -273,8 +273,8 @@ def visualize_frequent_products(data):
     plt.xlabel("Product Name", fontsize=16)
     plt.ylabel("Count", fontsize=16)
     
-    # plt.tight_layout()  # Pastikan seluruh elemen grafik terlihat
-    # plt.subplots_adjust(bottom=0.7)  # Tambahkan margin di bawah jika diperlukan
+    plt.tight_layout()  # Pastikan seluruh elemen grafik terlihat
+    plt.subplots_adjust(bottom=0.5)  # Tambahkan margin di bawah jika diperlukan
 
     buffer = BytesIO()
     plt.savefig(buffer, format="png")
