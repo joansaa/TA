@@ -257,7 +257,7 @@ def visualize_frequent_products(data):
     count = data['nama_produk_stopword'].value_counts().reset_index()
     count.columns = ['nama_produk_stopword', 'count']
     
-    plt.figure(figsize=(15, 10))
+    plt.figure(figsize=(20, 15))
     ax = sns.barplot(x="nama_produk_stopword", y="count", data=count, order=count.sort_values('count', ascending=False)['nama_produk_stopword'].head(20))
     
     for p in ax.patches:
@@ -269,7 +269,7 @@ def visualize_frequent_products(data):
     
     plt.xticks(rotation='vertical', fontsize=12)
     plt.yticks(fontsize=12)
-    plt.title("Frequently Purchased Products", fontsize=20)
+    # plt.title("Frequently Purchased Products", fontsize=20)
     plt.xlabel("Product Name", fontsize=16)
     plt.ylabel("Count", fontsize=16)
     
