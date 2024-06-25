@@ -316,11 +316,6 @@ def run_apriori(preprocessed_file):
     # top_12_rules.to_excel(output_file, index=False)
     # return output_file
 
-    # # Save rules to JSON for visualization
-    # rules.to_json("association_rules_with_products.json", orient='records')
-    
-    # return "association_rules_with_products.json"
-
 def extract_products_from_frozenset(column):
     return column.apply(lambda x: ', '.join(list(x)))
 
