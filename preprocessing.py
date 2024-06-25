@@ -1,12 +1,23 @@
-# import json
+from flask import Flask, request, render_template, send_file
+
+import numpy as np
+import matplotlib.pyplot as plt
 import pandas as pd
-import string
 import re
+import string
+import seaborn as sns
+import base64
+import os
+from io import BytesIO
 from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import apriori, association_rules
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-import numpy as np
+from werkzeug.utils import secure_filename
+
+app = Flask(__name__)
+UPLOAD_FOLDER = '/path/to/upload'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def preprocess_data(file_path):
     data = pd.read_excel(file_path)
@@ -184,6 +195,35 @@ def preprocess_data(file_path):
     data = data[data['no_pesanan'].isin(valid_pesanan)]
 
     data.to_excel("for_apriori.xlsx", index=False)
+    return data
+
+def visualize_frequent_products(data):
+    count = data['nama_produk_stopword'].value_counts().reset_index()
+    count.columns = ['nama_produk_stopword', 'count']
+    
+    plt.figure(figsize=(15, 10))
+    ax = sns.barplot(x="nama_produk_stopword", y="count", data=count, order=count.sort_values('count', ascending=False)['nama_produk_stopword'].head(20))
+    
+    for p in ax.patches:
+        ax.annotate(format(p.get_height(), '.0f'), 
+                    (p.get_x() + p.get_width() / 2., p.get_height()), 
+                    ha='center', va='center', 
+                    xytext=(0, 10), 
+                    textcoords='offset points')
+    
+    plt.xticks(rotation='vertical', fontsize=12)
+    plt.yticks(fontsize=12)
+    plt.title("Frequently Purchased Products", fontsize=20)
+    plt.xlabel("Product Name", fontsize=16)
+    plt.ylabel("Count", fontsize=16)
+    
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png")
+    buffer.seek(0)
+    img_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    buffer.close()
+    
+    return img_str
 
 def run_apriori(preprocessed_file):
     df = pd.read_excel(preprocessed_file)
@@ -198,24 +238,24 @@ def run_apriori(preprocessed_file):
         return "Tidak ada rekomendasi bundling produk karena data penjualan kurang banyak"
     
     rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.1)
-    # rules['antecedents_products'] = extract_products_from_frozenset(rules['antecedents'])
-    # rules['consequents_products'] = extract_products_from_frozenset(rules['consequents'])
-    # output_file = "association_rules_with_products.xlsx"
-    # rules.to_excel(output_file, index=False)
-    # return output_file
-
-    # Sort rules by confidence or any other metric you prefer
-    rules = rules.sort_values(by='confidence', ascending=False)
-
-    # Select top 10 rules
-    top_10_rules = rules.head(10)
-
-    # Update the subsequent code to use `top_10_rules` instead of `rules`
-    top_10_rules['antecedents_products'] = extract_products_from_frozenset(top_10_rules['antecedents'])
-    top_10_rules['consequents_products'] = extract_products_from_frozenset(top_10_rules['consequents'])
+    rules['antecedents_products'] = extract_products_from_frozenset(rules['antecedents'])
+    rules['consequents_products'] = extract_products_from_frozenset(rules['consequents'])
     output_file = "association_rules_with_products.xlsx"
-    top_10_rules.to_excel(output_file, index=False)
+    rules.to_excel(output_file, index=False)
     return output_file
+
+    # # Sort rules by confidence or any other metric you prefer
+    # rules = rules.sort_values(by='confidence', ascending=False)
+
+    # # Select top 12 rules
+    # top_12_rules = rules.head(12)
+
+    # # Update the subsequent code to use `top_12_rules` instead of `rules`
+    # top_12_rules['antecedents_products'] = extract_products_from_frozenset(top_12_rules['antecedents'])
+    # top_12_rules['consequents_products'] = extract_products_from_frozenset(top_12_rules['consequents'])
+    # output_file = "association_rules_with_products.xlsx"
+    # top_12_rules.to_excel(output_file, index=False)
+    # return output_file
 
     # # Save rules to JSON for visualization
     # rules.to_json("association_rules_with_products.json", orient='records')
@@ -224,3 +264,28 @@ def run_apriori(preprocessed_file):
 
 def extract_products_from_frozenset(column):
     return column.apply(lambda x: ', '.join(list(x)))
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return 'No file part'
+    file = request.files['file']
+    if file.filename == '':
+        return 'No selected file'
+    if file:
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
+        
+        data = preprocess_data(file_path)
+        img_str = visualize_frequent_products(data)
+        bundling_recommendations = run_apriori("for_apriori.xlsx")
+        
+        return render_template('results.html', img_str=img_str, recommendations=bundling_recommendations)
+
+if __name__ == '__main__':
+    app.run(debug=True)
