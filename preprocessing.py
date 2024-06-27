@@ -277,7 +277,7 @@ def run_apriori(preprocessed_file):
     # Cek apakah ada frequent itemsets
     frequent_itemsets = apriori(df_trans, min_support=0.01, use_colnames=True)
     if frequent_itemsets.empty:
-        return "Tidak ada rekomendasi bundling produk karena data penjualan kurang banyak"
+        return "Tidak ada rekomendasi bundling produk"
     
     rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.1)
 
