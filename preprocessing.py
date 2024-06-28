@@ -267,9 +267,49 @@ def visualize_frequent_products(data):
     
     return img_str
 
+# def run_apriori(preprocessed_file):
+#     df = pd.read_excel(preprocessed_file)
+#     itemsets = df.groupby(['no_pesanan'])['nama_produk_stopword'].apply(list).tolist()
+#     te = TransactionEncoder()
+#     te_ary = te.fit(itemsets).transform(itemsets)
+#     df_trans = pd.DataFrame(te_ary, columns=te.columns_)
+    
+#     # Cek apakah ada frequent itemsets
+#     frequent_itemsets = apriori(df_trans, min_support=0.01, use_colnames=True)
+#     if frequent_itemsets.empty:
+#         return "Tidak ada rekomendasi bundling produk"
+    
+#     rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.1)
+
+#     # rules['antecedents_products'] = extract_products_from_frozenset(rules['antecedents'])
+#     # rules['consequents_products'] = extract_products_from_frozenset(rules['consequents'])
+#     # output_file = "association_rules_with_products.xlsx"
+#     # rules.to_excel(output_file, index=False)
+#     # return output_file
+
+#     # Sort rules by confidence or any other metric you prefer
+#     rules = rules.sort_values(by='confidence', ascending=False)
+
+#     # Select top 12 rules
+#     top_12_rules = rules.head(12)
+
+#     # Update the subsequent code to use `top_12_rules` instead of `rules`
+#     top_12_rules['antecedents_products'] = extract_products_from_frozenset(top_12_rules['antecedents'])
+#     top_12_rules['consequents_products'] = extract_products_from_frozenset(top_12_rules['consequents'])
+#     output_file = "association_rules_with_products.xlsx"
+#     top_12_rules.to_excel(output_file, index=False)
+#     return output_file
+
 def run_apriori(preprocessed_file):
     df = pd.read_excel(preprocessed_file)
     itemsets = df.groupby(['no_pesanan'])['nama_produk_stopword'].apply(list).tolist()
+    
+    # Convert all items in itemsets to strings
+    itemsets = [[str(item) for item in itemset] for itemset in itemsets]
+    
+    # Print itemsets for debugging
+    print("Itemsets:", itemsets)
+    
     te = TransactionEncoder()
     te_ary = te.fit(itemsets).transform(itemsets)
     df_trans = pd.DataFrame(te_ary, columns=te.columns_)
@@ -281,24 +321,25 @@ def run_apriori(preprocessed_file):
     
     rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.1)
 
-    # rules['antecedents_products'] = extract_products_from_frozenset(rules['antecedents'])
-    # rules['consequents_products'] = extract_products_from_frozenset(rules['consequents'])
+    rules['antecedents_products'] = extract_products_from_frozenset(rules['antecedents'])
+    rules['consequents_products'] = extract_products_from_frozenset(rules['consequents'])
+    output_file = "association_rules_with_products.xlsx"
+    rules.to_excel(output_file, index=False)
+    return output_file
+
+    # # Sort rules by confidence or any other metric you prefer
+    # rules = rules.sort_values(by='confidence', ascending=False)
+
+    # # Select top 12 rules
+    # top_12_rules = rules.head(12)
+
+    # # Update the subsequent code to use `top_12_rules` instead of `rules`
+    # top_12_rules['antecedents_products'] = extract_products_from_frozenset(top_12_rules['antecedents'])
+    # top_12_rules['consequents_products'] = extract_products_from_frozenset(top_12_rules['consequents'])
     # output_file = "association_rules_with_products.xlsx"
-    # rules.to_excel(output_file, index=False)
+    # top_12_rules.to_excel(output_file, index=False)
     # return output_file
 
-    # Sort rules by confidence or any other metric you prefer
-    rules = rules.sort_values(by='confidence', ascending=False)
-
-    # Select top 12 rules
-    top_12_rules = rules.head(12)
-
-    # Update the subsequent code to use `top_12_rules` instead of `rules`
-    top_12_rules['antecedents_products'] = extract_products_from_frozenset(top_12_rules['antecedents'])
-    top_12_rules['consequents_products'] = extract_products_from_frozenset(top_12_rules['consequents'])
-    output_file = "association_rules_with_products.xlsx"
-    top_12_rules.to_excel(output_file, index=False)
-    return output_file
 
 def extract_products_from_frozenset(column):
     return column.apply(lambda x: ', '.join(list(x)))
