@@ -250,7 +250,7 @@ def visualize_frequent_products(data):
                     xytext=(0, 10), 
                     textcoords='offset points')
     
-    plt.xticks(rotation='vertical', fontsize=12)
+    plt.xticks(rotation=-90, fontsize=12)
     plt.yticks(fontsize=12)
     # plt.title("Frequently Purchased Products", fontsize=20)
     plt.xlabel("Product Name", fontsize=16)
@@ -307,8 +307,8 @@ def run_apriori(preprocessed_file):
     # Convert all items in itemsets to strings
     itemsets = [[str(item) for item in itemset] for itemset in itemsets]
     
-    # Print itemsets for debugging
-    print("Itemsets:", itemsets)
+    # # Print itemsets for debugging
+    # print("Itemsets:", itemsets)
     
     te = TransactionEncoder()
     te_ary = te.fit(itemsets).transform(itemsets)
@@ -319,7 +319,7 @@ def run_apriori(preprocessed_file):
     if frequent_itemsets.empty:
         return "Tidak ada rekomendasi bundling produk"
     
-    rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.1)
+    rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.3)
 
     rules['antecedents_products'] = extract_products_from_frozenset(rules['antecedents'])
     rules['consequents_products'] = extract_products_from_frozenset(rules['consequents'])

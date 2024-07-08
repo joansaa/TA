@@ -21,7 +21,7 @@
   <body>
     <nav
       class="navbar navbar-expand-lg navbar-light bg-light fixed-top p-2"
-      style="border-bottom: 1px solid black"
+      style="border-bottom: 1px solid #001E3F"
     >
       <div class="container">
         <a class="navbar-brand" href="#home">just4u</a>
@@ -42,9 +42,10 @@
     </nav>
 
     <div id="home" class="hero container">
-      <img src="/static/images/hero.png" alt="image" height="200" width="500" />
+      <img src="/static/images/hero.png" alt="image" height="400" width="700" />
       <div class="centered">Bundle products and boost your profits!</div>
     </div>
+    <br/>
 
     <div class="container mt-5">
       <h2 class="text-center">
@@ -87,14 +88,14 @@
       <p>{{ result }}</p>
       {% else %}
       <h2 id="recomendation" class="mt-5" style="text-align: center">
-        Product Bundling Recommendation
+        <span style="color: #007aff">Product Bundling</span> Recommendations
       </h2>
       <br />
       <div class="card-columns">
         {% for row in result %}
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Bundling:</h5>
+            <h5 class="card-title"><span style="color: #007aff">Bundling :</span></h5>
             <ul>
               {% for item in row[0].split(',') %}
               <li class="card-text">{{ item.strip() }}</li>
@@ -112,7 +113,7 @@
       </div>
       {% endif %} {% endif %} {% if img_str %}
       <div id="graphic" class="d-flex flex-column align-items-center mb-5">
-        <h2 class="mt-5">Frequently Purchased Products</h2>
+        <h2 class="mt-5"><span style="color: #007aff">Frequently Purchased</span> Product</h2>
         <br />
         <img
           src="data:image/png;base64,{{ img_str }}"
@@ -133,14 +134,18 @@
           <h2 style="color: rgba(0, 122, 255, 1)">
             Have difficulties in managing products in an online store?
           </h2>
+          <br/>
           <h4>Let's use our website!</h4>
           <h4>The recommendation it’s just for you.</h4>
         </div>
 
-        <h4 style="margin-top: 120px">
-          <span style="color: rgba(0, 122, 255, 1)">How</span> to use our
-          website?
-        </h4>
+        <div style="text-align: center">
+          <h4 style="margin-top: 120px">
+            <span style="color: rgba(0, 122, 255, 1)">How</span> to use our
+            website?
+          </h4>
+        </div>
+        <br/>
 
         <div style="display: grid; grid-template-columns: auto auto; gap: 20px">
           <div class="card">
@@ -172,10 +177,13 @@
           </div>
         </div>
 
-        <h4 style="margin-top: 100px">
-          <span style="color: rgba(0, 122, 255, 1)">Why</span> you should use
-          our website?
-        </h4>
+        <div style="text-align: center">
+          <h4 style="margin-top: 100px">
+            <span style="color: rgba(0, 122, 255, 1)">Why</span> you should use
+            our website?
+          </h4>
+        </div>
+        <br/>
 
         <div
           class="w-100 p-4 text-center font-weight-normal"
@@ -185,7 +193,7 @@
             border-radius: 20px;
           "
         >
-          <p>
+          <p><br>
             Because we will help you to analyze your products based on
             historical sales data and make product bundling recommendations to
             increase your online store sales!
@@ -195,7 +203,7 @@
     </div>
 
     <footer
-      style="margin-top: 200px"
+      style="margin-top: 100px"
       class="bg-body-tertiary text-center text-lg-start"
     >
       <!-- Copyright -->
