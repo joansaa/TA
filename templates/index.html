@@ -86,7 +86,9 @@
       {% if result %} {% if result is string %}
       <p>{{ result }}</p>
       {% else %}
-      <h2 id="recomendation" class="mt-5">Product Bundling Recommendation</h2>
+      <h2 id="recomendation" class="mt-5" style="text-align: center">
+        Product Bundling Recommendation
+      </h2>
       <br />
       <div class="card-columns">
         {% for row in result %}
@@ -119,13 +121,95 @@
           height="800"
         />
       </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          document.getElementById("content").style.display = "none";
+        });
+      </script>
       {% endif %}
+
+      <div id="content" style="margin-top: 160px">
+        <div style="text-align: center">
+          <h2 style="color: rgba(0, 122, 255, 1)">
+            Have difficulties in managing products in an online store?
+          </h2>
+          <h4>Let's use our website!</h4>
+          <h4>The recommendation it’s just for you.</h4>
+        </div>
+
+        <h4 style="margin-top: 120px">
+          <span style="color: rgba(0, 122, 255, 1)">How</span> to use our
+          website?
+        </h4>
+
+        <div style="display: grid; grid-template-columns: auto auto; gap: 20px">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">1.</h5>
+              <p>Export your sales data in Shopee Seller Centre</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">2.</h5>
+              <p>Upload your sales data in the form above</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">3.</h5>
+              <p>View product bundling recommendation results</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">4.</h5>
+              <p>
+                Start selling your products based on our recommended product
+                bundles!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="margin-top: 100px">
+          <span style="color: rgba(0, 122, 255, 1)">Why</span> you should use
+          our website?
+        </h4>
+
+        <div
+          class="w-100 p-4 text-center font-weight-normal"
+          style="
+            background-color: rgba(0, 30, 63, 0.7);
+            color: white;
+            border-radius: 20px;
+          "
+        >
+          <p>
+            Because we will help you to analyze your products based on
+            historical sales data and make product bundling recommendations to
+            increase your online store sales!
+          </p>
+        </div>
+      </div>
     </div>
 
+    <footer
+      style="margin-top: 200px"
+      class="bg-body-tertiary text-center text-lg-start"
+    >
+      <!-- Copyright -->
+      <div
+        class="text-center p-3"
+        style="background-color: rgba(0, 0, 0, 0.05)"
+      >
+        © 2020, Josephine Kristianti:
+      </div>
+      <!-- Copyright -->
+    </footer>
+
     <script>
-      function showLoading() {
-        document.getElementById("loading").style.display = "block";
-      }
+      function showLoading() {}
 
       function triggerInputFile() {
         document.querySelector(".dropzone").click();
