@@ -16,25 +16,25 @@
       src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
       crossorigin="anonymous"
-    ></script>
+    ></script>   
   </head>
   <body>
     <nav
       class="navbar navbar-expand-lg navbar-light bg-light fixed-top p-2"
-      style="border-bottom: 1px solid #001E3F"
+      style="border-bottom: 1px #001E3F"
     >
       <div class="container">
-        <a class="navbar-brand" href="#home">just4u</a>
+        <a class="navbar-brand" href="#home" style="color: #001E3F">just4u</a>
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#home">Home</a>
+              <a class="nav-link" href="#home" style="color: #001E3F">Home</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#recomendation">Recomendation</a>
+              <a class="nav-link" href="#recomendation" style="color: #001E3F">Recomendation</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#graphic">Graphic</a>
+              <a class="nav-link" href="#graphic" style="color: #001E3F">Graphic</a>
             </li>
           </ul>
         </div>
@@ -49,7 +49,7 @@
 
     <div class="container mt-5">
       <h2 class="text-center">
-        <span style="color: #007aff">Upload</span> Your Sales Data
+        <span style="color: #007aff">Upload</span> <span style="color: #001E3F">Your Sales Data</span>
       </h2>
       <br />
       <form
@@ -88,7 +88,7 @@
       <p>{{ result }}</p>
       {% else %}
       <h2 id="recomendation" class="mt-5" style="text-align: center">
-        <span style="color: #007aff">Product Bundling</span> Recommendations
+        <span style="color: #007aff">Product Bundling</span> <span style="color: #001E3F">Recommendations</span>
       </h2>
       <br />
       <div class="card-columns">
@@ -97,14 +97,16 @@
           <div class="card-body">
             <h5 class="card-title"><span style="color: #007aff">Bundling :</span></h5>
             <ul>
+              <!-- looping antecedents -->
               {% for item in row[0].split(',') %}
-              <li class="card-text">{{ item.strip() }}</li>
+              <li class="card-text" style="color: #001E3F">{{ item.strip() }}</li>
               {% endfor %}
             </ul>
-            <p><b>dan</b></p>
+            <p style="color: #001E3F"><b>dan</b></p>
             <ul>
+              <!-- looping consequents -->
               {% for item in row[1].split(',') %}
-              <li class="card-text">{{ item.strip() }}</li>
+              <li class="card-text" style="color: #001E3F">{{ item.strip() }}</li>
               {% endfor %}
             </ul>
           </div>
@@ -113,15 +115,16 @@
       </div>
       {% endif %} {% endif %} {% if img_str %}
       <div id="graphic" class="d-flex flex-column align-items-center mb-5">
-        <h2 class="mt-5"><span style="color: #007aff">Frequently Purchased</span> Product</h2>
+        <h2 class="mt-5"><span style="color: #007aff">Frequently Purchased</span> <span style="color: #001E3F">Product</span></h2>
         <br />
         <img
           src="data:image/png;base64,{{ img_str }}"
           alt="gambar grafik"
-          width="1000"
+          width="1200"
           height="800"
         />
       </div>
+      <!-- hide content yang ada di landing page awal -->
       <script>
         document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("content").style.display = "none";
@@ -135,14 +138,14 @@
             Have difficulties in managing products in an online store?
           </h2>
           <br/>
-          <h4>Let's use our website!</h4>
-          <h4>The recommendation it’s just for you.</h4>
+          <h4 style="color: #001E3F">Let's use our website!</h4>
+          <h4 style="color: #001E3F">The recommendation it’s just for you.</h4>
         </div>
 
         <div style="text-align: center">
           <h4 style="margin-top: 120px">
-            <span style="color: rgba(0, 122, 255, 1)">How</span> to use our
-            website?
+            <span style="color: rgba(0, 122, 255, 1)">How</span> <span style="color: #001E3F">to use our
+            website?</span>
           </h4>
         </div>
         <br/>
@@ -151,25 +154,25 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">1.</h5>
-              <p>Export your sales data in Shopee Seller Centre</p>
+              <p style="color: #001E3F">Export your sales data in Shopee Seller Centre</p>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">2.</h5>
-              <p>Upload your sales data in the form above</p>
+              <p style="color: #001E3F">Upload your sales data in the form above</p>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">3.</h5>
-              <p>View product bundling recommendation results</p>
+              <p style="color: #001E3F">View product bundling recommendation results</p>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">4.</h5>
-              <p>
+              <p style="color: #001E3F">
                 Start selling your products based on our recommended product
                 bundles!
               </p>
@@ -179,8 +182,8 @@
 
         <div style="text-align: center">
           <h4 style="margin-top: 100px">
-            <span style="color: rgba(0, 122, 255, 1)">Why</span> you should use
-            our website?
+            <span style="color: rgba(0, 122, 255, 1)">Why</span> <span style="color: #001E3F">you should use
+            our website?</span>
           </h4>
         </div>
         <br/>
@@ -193,7 +196,7 @@
             border-radius: 20px;
           "
         >
-          <p><br>
+          <p><br/>
             Because we will help you to analyze your products based on
             historical sales data and make product bundling recommendations to
             increase your online store sales!
@@ -217,12 +220,16 @@
     </footer>
 
     <script>
-      function showLoading() {}
+      function showLoading() {
+        document.getElementById("loading").style.display = "block";
+      }
 
+      // Mengambil file dari computer
       function triggerInputFile() {
         document.querySelector(".dropzone").click();
       }
 
+      // membaca file / membaca nama file dan dimunculkan di form
       function readFile(input) {
         if (input.files && input.files[0]) {
           var reader = new FileReader();
@@ -247,7 +254,7 @@
           reader.readAsDataURL(input.files[0]);
         }
       }
-
+      
       $(".dropzone").change(function () {
         readFile(this);
       });
