@@ -16,25 +16,29 @@
       src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
       crossorigin="anonymous"
-    ></script>   
+    ></script>
   </head>
   <body>
     <nav
       class="navbar navbar-expand-lg navbar-light bg-light fixed-top p-2"
-      style="border-bottom: 1px #001E3F"
+      style="border-bottom: 1px #001e3f"
     >
       <div class="container">
-        <a class="navbar-brand" href="#home" style="color: #001E3F">just4u</a>
+        <a class="navbar-brand" href="#home" style="color: #001e3f">just4u</a>
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#home" style="color: #001E3F">Home</a>
+              <a class="nav-link" href="#home" style="color: #001e3f">Home</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#recomendation" style="color: #001E3F">Recomendation</a>
+              <a class="nav-link" href="#recomendation" style="color: #001e3f"
+                >Recomendation</a
+              >
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#graphic" style="color: #001E3F">Graphic</a>
+              <a class="nav-link" href="#graphic" style="color: #001e3f"
+                >Graphic</a
+              >
             </li>
           </ul>
         </div>
@@ -45,11 +49,12 @@
       <img src="/static/images/hero.png" alt="image" height="400" width="700" />
       <div class="centered">Bundle products and boost your profits!</div>
     </div>
-    <br/>
+    <br />
 
     <div class="container mt-5">
       <h2 class="text-center">
-        <span style="color: #007aff">Upload</span> <span style="color: #001E3F">Your Sales Data</span>
+        <span style="color: #007aff">Upload</span>
+        <span style="color: #001e3f">Your Sales Data</span>
       </h2>
       <br />
       <form
@@ -88,25 +93,32 @@
       <p>{{ result }}</p>
       {% else %}
       <h2 id="recomendation" class="mt-5" style="text-align: center">
-        <span style="color: #007aff">Product Bundling</span> <span style="color: #001E3F">Recommendations</span>
+        <span style="color: #007aff">Product Bundling</span>
+        <span style="color: #001e3f">Recommendations</span>
       </h2>
       <br />
       <div class="card-columns">
         {% for row in result %}
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title"><span style="color: #007aff">Bundling :</span></h5>
+            <h5 class="card-title">
+              <span style="color: #007aff">Bundling :</span>
+            </h5>
             <ul>
               <!-- looping antecedents -->
               {% for item in row[0].split(',') %}
-              <li class="card-text" style="color: #001E3F">{{ item.strip() }}</li>
+              <li class="card-text" style="color: #001e3f">
+                {{ item.strip().split(' ')[0] }}
+              </li>
               {% endfor %}
             </ul>
-            <p style="color: #001E3F"><b>dan</b></p>
+            <p style="color: #001e3f"><b>dan</b></p>
             <ul>
               <!-- looping consequents -->
               {% for item in row[1].split(',') %}
-              <li class="card-text" style="color: #001E3F">{{ item.strip() }}</li>
+              <li class="card-text" style="color: #001e3f">
+                {{ item.strip().split(' ')[0] }}
+              </li>
               {% endfor %}
             </ul>
           </div>
@@ -115,7 +127,10 @@
       </div>
       {% endif %} {% endif %} {% if img_str %}
       <div id="graphic" class="d-flex flex-column align-items-center mb-5">
-        <h2 class="mt-5"><span style="color: #007aff">Frequently Purchased</span> <span style="color: #001E3F">Product</span></h2>
+        <h2 class="mt-5">
+          <span style="color: #007aff">Frequently Purchased</span>
+          <span style="color: #001e3f">Product</span>
+        </h2>
         <br />
         <img
           src="data:image/png;base64,{{ img_str }}"
@@ -137,42 +152,48 @@
           <h2 style="color: rgba(0, 122, 255, 1)">
             Have difficulties in managing products in an online store?
           </h2>
-          <br/>
-          <h4 style="color: #001E3F">Let's use our website!</h4>
-          <h4 style="color: #001E3F">The recommendation it’s just for you.</h4>
+          <br />
+          <h4 style="color: #001e3f">Let's use our website!</h4>
+          <h4 style="color: #001e3f">The recommendation it’s just for you.</h4>
         </div>
 
         <div style="text-align: center">
           <h4 style="margin-top: 120px">
-            <span style="color: rgba(0, 122, 255, 1)">How</span> <span style="color: #001E3F">to use our
-            website?</span>
+            <span style="color: rgba(0, 122, 255, 1)">How</span>
+            <span style="color: #001e3f">to use our website?</span>
           </h4>
         </div>
-        <br/>
+        <br />
 
         <div style="display: grid; grid-template-columns: auto auto; gap: 20px">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">1.</h5>
-              <p style="color: #001E3F">Export your sales data in Shopee Seller Centre</p>
+              <p style="color: #001e3f">
+                Export your sales data in Shopee Seller Centre
+              </p>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">2.</h5>
-              <p style="color: #001E3F">Upload your sales data in the form above</p>
+              <p style="color: #001e3f">
+                Upload your sales data in the form above
+              </p>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">3.</h5>
-              <p style="color: #001E3F">View product bundling recommendation results</p>
+              <p style="color: #001e3f">
+                View product bundling recommendation results
+              </p>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">4.</h5>
-              <p style="color: #001E3F">
+              <p style="color: #001e3f">
                 Start selling your products based on our recommended product
                 bundles!
               </p>
@@ -182,11 +203,11 @@
 
         <div style="text-align: center">
           <h4 style="margin-top: 100px">
-            <span style="color: rgba(0, 122, 255, 1)">Why</span> <span style="color: #001E3F">you should use
-            our website?</span>
+            <span style="color: rgba(0, 122, 255, 1)">Why</span>
+            <span style="color: #001e3f">you should use our website?</span>
           </h4>
         </div>
-        <br/>
+        <br />
 
         <div
           class="w-100 p-4 text-center font-weight-normal"
@@ -196,7 +217,8 @@
             border-radius: 20px;
           "
         >
-          <p><br/>
+          <p>
+            <br />
             Because we will help you to analyze your products based on
             historical sales data and make product bundling recommendations to
             increase your online store sales!
@@ -254,7 +276,7 @@
           reader.readAsDataURL(input.files[0]);
         }
       }
-      
+
       $(".dropzone").change(function () {
         readFile(this);
       });
