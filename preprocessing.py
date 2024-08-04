@@ -111,69 +111,33 @@ def preprocess_data(file_path):
     data.to_excel("for_apriori.xlsx", index=False)
     return data
 
-# def visualize_frequent_products(data):
-#     count = data['nama_produk_stopword'].value_counts().reset_index()
-#     count.columns = ['nama_produk_stopword', 'count']
-    
-#     plt.figure(figsize=(20, 15))
-#     ax = sns.barplot(x="nama_produk_stopword", y="count", data=count, order=count.sort_values('count', ascending=False)['nama_produk_stopword'].head(20))
-    
-#     for p in ax.patches:
-#         ax.annotate(format(p.get_height(), '.0f'), 
-#                     (p.get_x() + p.get_width() / 2., p.get_height()), 
-#                     ha='center', va='center', 
-#                     xytext=(0, 10), 
-#                     textcoords='offset points')
-    
-#     plt.xticks(rotation=-90, fontsize=12)
-#     plt.yticks(fontsize=12)
-#     # plt.title("Frequently Purchased Products", fontsize=20)
-#     plt.xlabel("Product Name", fontsize=16)
-#     plt.ylabel("Count", fontsize=16)
-    
-#     plt.tight_layout()  # Pastikan seluruh elemen grafik terlihat
-#     plt.subplots_adjust(bottom=0.5)  # Tambahkan margin di bawah jika diperlukan
-
-#     buffer = BytesIO()
-#     plt.savefig(buffer, format="png")
-#     buffer.seek(0)
-#     img_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
-#     buffer.close()
-    
-#     return img_str
-
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import textwrap
-from io import BytesIO
-import base64
-
+# Function to visualize frequent products
 def visualize_frequent_products(data):
+    # Count the occurrences of each product
     count = data['nama_produk_stopword'].value_counts().reset_index()
     count.columns = ['nama_produk_stopword', 'count']
-    
+
     # Mengambil kata pertama dari nama produk
     count['nama_produk_stopword'] = count['nama_produk_stopword'].apply(lambda x: x.split()[0] if x else '')
-    
+
     sns.set(style="whitegrid")
-    plt.figure(figsize=(15, 10))  # Mengurangi ukuran gambar
-    ax = sns.barplot(y="nama_produk_stopword", x="count", data=count, 
-                    order=count.sort_values('count', ascending=False)['nama_produk_stopword'].head(10), 
-                    color='#007aff', ci=None)  # Menggunakan satu warna untuk semua bar
-    
+    plt.figure(figsize=(15, 10))  # Set the figure size
+    ax = sns.barplot(y="nama_produk_stopword", x="count", data=count,
+                    order=count.sort_values('count', ascending=False)['nama_produk_stopword'].head(10),
+                    palette="viridis", ci=None)  # Use the 'viridis' palette for color variety
+
     for p in ax.patches:
-        ax.annotate(format(p.get_width(), '.0f'), 
-                    (p.get_width(), p.get_y() + p.get_height() / 2.), 
-                    ha='center', va='center', 
-                    xytext=(5, 0), 
+        ax.annotate(format(p.get_width(), '.0f'),
+                    (p.get_width(), p.get_y() + p.get_height() / 2.),
+                    ha='center', va='center',
+                    xytext=(5, 0),
                     textcoords='offset points')
-    
+
     plt.yticks(fontsize=12)
     plt.xticks(range(0, count['count'].max() + 1, 1), fontsize=12)
-    plt.ylabel("Product Name", fontsize=12, labelpad=20)  # Tambahkan padding pada label sumbu y
-    plt.xlabel("Count", fontsize=12, labelpad=20)  # Tambahkan padding pada label sumbu x
-    
+    plt.ylabel("Nama Produk", fontsize=12, labelpad=20)  # Add padding to the y-axis label
+    plt.xlabel("Jumlah Pembelian", fontsize=12, labelpad=20)  # Add padding to the x-axis label
+
     plt.tight_layout()
     plt.subplots_adjust(left=0.3)
 
@@ -187,8 +151,50 @@ def visualize_frequent_products(data):
     buffer.seek(0)
     img_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
     buffer.close()
-    
+
     return img_str
+
+
+# def visualize_frequent_products(data):
+#     count = data['nama_produk_stopword'].value_counts().reset_index()
+#     count.columns = ['nama_produk_stopword', 'count']
+    
+#     # Mengambil kata pertama dari nama produk
+#     count['nama_produk_stopword'] = count['nama_produk_stopword'].apply(lambda x: x.split()[0] if x else '')
+    
+#     sns.set(style="whitegrid")
+#     plt.figure(figsize=(15, 10))  # Mengurangi ukuran gambar
+#     ax = sns.barplot(y="nama_produk_stopword", x="count", data=count, 
+#                     order=count.sort_values('count', ascending=False)['nama_produk_stopword'].head(10), 
+#                     color='#007aff', ci=None)  # Menggunakan satu warna untuk semua bar
+    
+#     for p in ax.patches:
+#         ax.annotate(format(p.get_width(), '.0f'), 
+#                     (p.get_width(), p.get_y() + p.get_height() / 2.), 
+#                     ha='center', va='center', 
+#                     xytext=(5, 0), 
+#                     textcoords='offset points')
+    
+#     plt.yticks(fontsize=12)
+#     plt.xticks(range(0, count['count'].max() + 1, 1), fontsize=12)
+#     plt.ylabel("Product Name", fontsize=12, labelpad=20)  # Tambahkan padding pada label sumbu y
+#     plt.xlabel("Count", fontsize=12, labelpad=20)  # Tambahkan padding pada label sumbu x
+    
+#     plt.tight_layout()
+#     plt.subplots_adjust(left=0.3)
+
+#     ax.spines['top'].set_visible(False)
+#     ax.spines['right'].set_visible(False)
+#     ax.spines['left'].set_visible(False)
+#     ax.spines['bottom'].set_visible(False)
+
+#     buffer = BytesIO()
+#     plt.savefig(buffer, format="png")
+#     buffer.seek(0)
+#     img_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
+#     buffer.close()
+    
+#     return img_str
 
 
 def run_apriori(preprocessed_file):
