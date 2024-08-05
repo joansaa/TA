@@ -27,6 +27,7 @@ def process_file(filename):
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     preprocess_data(file_path)
     apriori_output_path = run_apriori("for_apriori.xlsx")
+    data = pd.read_excel("for_apriori.xlsx")
     
     if isinstance(apriori_output_path, str) and apriori_output_path == "Tidak ada rekomendasi bundling produk":
         result = apriori_output_path
@@ -35,7 +36,7 @@ def process_file(filename):
         apriori_output = pd.read_excel(apriori_output_path)
         result = apriori_output[['antecedents_products', 'consequents_products']].values.tolist()
         df = pd.DataFrame(result, columns=['nama_produk_stopword', 'consequents_products'])  # Ubah kembali ke dataframe
-        img_str = visualize_frequent_products(df)
+        img_str = visualize_frequent_products(data)
     
     return render_template('index.html', result=result, img_str=img_str)
 
